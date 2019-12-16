@@ -1,5 +1,5 @@
 package main;
-public class Vector2D {
+public class Vector2D implements Comparable{
     public final int x;
     public final int y;
 
@@ -75,5 +75,16 @@ public class Vector2D {
         hash += this.x * 31;
         hash += this.y * 17;
         return hash;
+    }
+
+    public int compareTo(Object obj){
+        Vector2D otherVect = (Vector2D)obj;
+        if(this.x > otherVect.x) return 1;
+        if(this.x < otherVect.x) return -1;
+        if(this.y > otherVect.y) return 1;
+        if(this.y < otherVect.y) return -1;
+
+        return 0;
+
     }
 }
