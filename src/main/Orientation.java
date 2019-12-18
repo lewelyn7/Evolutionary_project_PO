@@ -26,7 +26,7 @@ public class Orientation {
     public Vector2D getVector(){
         switch (value){
             case 0:
-                return new Vector2D(0,0);
+                return new Vector2D(0,1);
 
             case 1:
                 return new Vector2D(1,1);
