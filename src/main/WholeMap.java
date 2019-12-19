@@ -96,7 +96,7 @@ public class WholeMap implements IPositionChangedObserver {
 
 
 
-    private void plantGrassRandomly(){
+    public void plantGrassRandomly(){
         Vector2D vectToPlant = getRandomVect();
         if(capacity <= objCounter)
             throw new RuntimeException("za duzo grasss");
@@ -105,7 +105,7 @@ public class WholeMap implements IPositionChangedObserver {
         }
         plantGrass(new Grass(vectToPlant));
     }
-    private void plantJungleGrassRandomly(){
+    public void plantJungleGrassRandomly(){
         Vector2D vectToPlant = jungle.getRandomVect();
         if(jungle.capacity <= jungle.objCounter)
             throw new RuntimeException("za duzo grasss");

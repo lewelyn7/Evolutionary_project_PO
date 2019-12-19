@@ -21,9 +21,9 @@ public class MyPanel extends JPanel {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         g.setColor(new Color(180,200,180));
-        g.fillRect(0,0,map.xSize*objectSize,map.ySize*objectSize);
+       // g.fillRect(0,0,map.xSize*objectSize,map.ySize*objectSize);
         g.setColor(new Color(150,220,150));
-        g.fillRect(map.jungle.bottomLeft.x*objectSize, map.jungle.bottomLeft.y*objectSize, map.jungle.xSize*objectSize, map.jungle.ySize*objectSize);
+      //H  g.fillRect(map.jungle.bottomLeft.x*objectSize, map.jungle.bottomLeft.y*objectSize, map.jungle.xSize*objectSize, map.jungle.ySize*objectSize);
 
         drawAnimals(g2d,map);
         drawGrasses(g2d, map);

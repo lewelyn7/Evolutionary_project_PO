@@ -16,12 +16,7 @@ public class Testowa {
         map.plantGrass(new Grass(new Vector2D(5,3)));
         map.plantGrass(new Grass(new Vector2D(15,3)));
         map.plantGrass(new Grass(new Vector2D(25,3)));
-        EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new MyFrame(map);
-            }
-        });
+        MyFrame frame = new MyFrame(map);
     }
 
 }

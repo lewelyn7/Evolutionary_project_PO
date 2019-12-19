@@ -31,7 +31,10 @@ public class Simulation implements ActionListener {
         //things to simulate;
        // map.simulateOneDay();
         for(Animal s: map.animalsList){
-            s.moveRandomly();
+           // s.moveRandomly();
+            map.plantGrassRandomly();
+            map.plantJungleGrassRandomly();
+            s.moveByTranslation(new Vector2D(0,1));
             System.out.println(s.toString());
         }
 
