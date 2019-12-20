@@ -15,7 +15,7 @@ public class MyFrame extends JFrame {
         setLocation(50,50);
 
         JPanel panel = new MyPanel(map);
-        Simulation simulation = new Simulation(panel, map, 100);
+        Simulation simulation = new Simulation(panel, map, 500);
         setVisible(true);
         add(panel);
         simulation.start();

@@ -1,7 +1,10 @@
 package main;
 
+import com.sun.nio.sctp.PeerAddressChangeNotification;
+
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.Vector;
 
 public class Animal implements Iorganism, Comparable {
@@ -15,6 +18,11 @@ public class Animal implements Iorganism, Comparable {
     public double getEnergy() {
         return energy;
     }
+
+    public void setEnergy(double energy){
+        this.energy = energy;
+    }
+
     public boolean decrementEnergy(){
         if(energy == 0) return false;
         energy = energy - 1;
@@ -67,7 +75,7 @@ public class Animal implements Iorganism, Comparable {
 
     @Override
     public String toString(){
-        return "Animal: " + position.toString() + " energy " + energy;
+        return "Animal: " + position.toString() + " energy " + energy + "gens " + gens.toString();
     }
 
     private Vector2D fixPosition(Vector2D position, int xSize, int ySize){
@@ -87,4 +95,23 @@ public class Animal implements Iorganism, Comparable {
         }
         return new Vector2D(fixedX, fixedY);
     }
+
+    public Animal procreate(Animal other){
+        Random generator = new Random();
+        //find free field
+        Vector2D childPosition = null;
+        Orientation childOrientation = new Orientation( generator.nextInt(8));
+        for(int i = 0; i < 8; i++){
+            childPosition = this.getPosition().add(Orientation.getVector(i));
+            if(map.canPlaceAnimal(childPosition)){
+               break;
+            }
+        }
+        this.setEnergy(this.getEnergy()*0.75);
+        other.setEnergy(other.getEnergy()*0.75);
+
+        return new Animal(map, childPosition, orientation, gens.mixGenoms(other.gens), this.getEnergy()*0.25 + other.getEnergy()*0.25);
+
+    }
+
 }

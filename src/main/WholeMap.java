@@ -13,17 +13,19 @@ public class WholeMap implements IPositionChangedObserver {
     public Map<Vector2D, Grass> plants = new HashMap<Vector2D, Grass>();
     public List<Animal> animalsList = new LinkedList<Animal>();
     public JungleMap jungle;
-    private int objCounter = 0;
+    public int objCounter = 0;
     private int capacity;
+    private final double procreationEnergy;
     Random xGenerator = new Random();
     Random yGenerator = new Random();
 
 
-    public WholeMap(int xSize, int ySize, double grassEnergy, double jungleRatio){
+    public WholeMap(int xSize, int ySize, double grassEnergy, double jungleRatio, double procreationEnergy){
         this.jungleRatio = jungleRatio;
         this.xSize = xSize;
         this.ySize = ySize;
         this.capacity = xSize*ySize;
+        this.procreationEnergy = procreationEnergy;
         Grass.energy = grassEnergy;
         jungle = new JungleMap(
                 new Vector2D((int)(xSize/2 - xSize*jungleRatio/2),(int)(ySize/2 - ySize*jungleRatio/2)),
@@ -79,7 +81,7 @@ public class WholeMap implements IPositionChangedObserver {
     }
 
     public void removeGrass(Grass grass){
-        plants.remove(grass);
+        plants.remove(grass.getPosition());
         if(jungle.contains(grass.getPosition()))  jungle.objCounter--;
         objCounter--;
     }
@@ -99,7 +101,7 @@ public class WholeMap implements IPositionChangedObserver {
     public void plantGrassRandomly(){
         Vector2D vectToPlant = getRandomVect();
         if(capacity <= objCounter)
-            throw new RuntimeException("za duzo grasss");
+            return;
         while(!canPlant(vectToPlant) || jungle.contains(vectToPlant)){
             vectToPlant = getRandomVect();
         }
@@ -108,7 +110,7 @@ public class WholeMap implements IPositionChangedObserver {
     public void plantJungleGrassRandomly(){
         Vector2D vectToPlant = jungle.getRandomVect();
         if(jungle.capacity <= jungle.objCounter)
-            throw new RuntimeException("za duzo grasss");
+            return;
         while(!canPlant(vectToPlant)){
             vectToPlant = jungle.getRandomVect();
         }
@@ -141,6 +143,8 @@ public class WholeMap implements IPositionChangedObserver {
         }
         //Grass eating
         for(Grass sgrass: toBeEaten){
+            System.out.println("eating eating");
+
             PriorityQueue<Animal> willBeEating = animals.get(sgrass.getPosition());
             if(willBeEating.size() == 1) {
                 willBeEating.peek().addEnergy(sgrass.energy);
@@ -159,6 +163,18 @@ public class WholeMap implements IPositionChangedObserver {
                 }
             }
             removeGrass(sgrass);
+        }
+
+        List<Animal> toBePlaced = new LinkedList<Animal>();
+        for(Map.Entry<Vector2D, PriorityQueue<Animal>> entry : animals.entrySet()){
+            PriorityQueue<Animal> animalQueue = entry.getValue();
+            if(animalQueue.size() > 1){
+                Iterator<Animal> animalIterator = animalQueue.iterator();
+                toBePlaced.add(animalIterator.next().procreate(animalIterator.next()));
+            }
+        }
+        for(Animal animal : toBePlaced){
+            this.placeAnimal(animal);
         }
 
         plantJungleGrassRandomly();

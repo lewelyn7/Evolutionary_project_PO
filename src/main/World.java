@@ -7,7 +7,7 @@ import java.util.Set;
 
 public class World {
     public static void main(String[] args){
-        WholeMap map = new WholeMap(100, 100,5, 0.1);
+        WholeMap map = new WholeMap(100, 100,5, 0.1, 20.0);
 
         Animal fox = new Animal(map,new Vector2D(0,0),new Orientation(0),new Genom(new int[32]), 10.0);
         Animal bat = new Animal(map,new Vector2D(1,1),new Orientation(0),new Genom(new int[32]), 10.0);

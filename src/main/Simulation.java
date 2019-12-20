@@ -29,13 +29,14 @@ public class Simulation implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent a){
         //things to simulate;
-       // map.simulateOneDay();
+        map.simulateOneDay();
         for(Animal s: map.animalsList){
-           // s.moveRandomly();
-            map.plantGrassRandomly();
-            map.plantJungleGrassRandomly();
-            s.moveByTranslation(new Vector2D(0,1));
-            System.out.println(s.toString());
+//           // s.moveRandomly();
+//            map.plantGrassRandomly();
+//            map.plantJungleGrassRandomly();
+//            s.moveByTranslation(new Vector2D(0,1));
+//            System.out.println(s.toString());
+            System.out.println(map.objCounter);
         }
 
         panel.repaint();
