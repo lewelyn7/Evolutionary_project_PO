@@ -33,13 +33,15 @@ public class World {
                 Double.parseDouble(empObj.getString("jungleRatio")),
                 startEnergy*0.5);
 
-        for(int i = 0; i < 18; i++){
+        for(int i = 0; i < 30; i++){
             map.placeAnimal(Animal.generateRandomAnimal(map, startEnergy));
         }
 
-        int[]    arr = new int[32];
-        for(int i = 0; i < 32; i++) arr[i] = 0;
-        map.placeAnimal(new Animal(map, new Vector2D(10,10),new Orientation(0), new Genom(arr), 350));
+        for(int i = 0; i < 25; i++){
+            map.plantGrassRandomly();
+            map.plantJungleGrassRandomly();
+        }
+
         MyFrame frame = new MyFrame(map, 10);
 
         } catch (FileNotFoundException e) {
