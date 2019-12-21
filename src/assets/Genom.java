@@ -1,13 +1,12 @@
-package main;
+package assets;
 
-import java.awt.*;
 import java.util.Arrays;
 import java.util.Random;
 
 public class Genom {
 
 
-    int[] gens = new int[32];
+    int[] gens;
     Random generator = new Random();
 
     public int getRandomGen(){

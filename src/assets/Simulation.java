@@ -1,4 +1,4 @@
-package main;
+package assets;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -9,13 +9,11 @@ public class Simulation implements ActionListener {
     private Timer timer;
     private JPanel panel;
     private WholeMap map;
-    private int delay;
 
     public Simulation(JPanel panel, WholeMap map, int delay) {
         timer = new Timer(delay, this);
         this.panel = panel;
         this.map = map;
-        this.delay = delay;
     }
 
     public void start(){
@@ -30,14 +28,6 @@ public class Simulation implements ActionListener {
     public void actionPerformed(ActionEvent a){
         //things to simulate;
         map.simulateOneDay();
-        for(Animal s: map.animalsList){
-//           // s.moveRandomly();
-//            map.plantGrassRandomly();
-//            map.plantJungleGrassRandomly();
-//            s.moveByTranslation(new Vector2D(0,1));
-//            System.out.println(s.toString());
-            System.out.println(map.objCounter);
-        }
 
         panel.repaint();
     }

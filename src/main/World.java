@@ -1,24 +1,50 @@
 package main;
 
-import java.util.Iterator;
-import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.Set;
+import Visualisation.MyFrame;
+import assets.*;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.net.URL;
+import javax.json.*;
 public class World {
-    public static void main(String[] args){
-        WholeMap map = new WholeMap(100, 100,5, 0.1, 20.0);
+    public static void main(String[] args) {
+        URL url = World.class.getResource("params.json");
+        File jsonInputFile = new File(url.getPath());
+        InputStream is;
+        try {
+            is = new FileInputStream(jsonInputFile);
+            // Create JsonReader from Json.
+            JsonReader reader = Json.createReader(is);
+            // Get the JsonObject structure from JsonReader.
+            JsonObject empObj = reader.readObject();
+            reader.close();
+            // read string data
 
-        Animal fox = new Animal(map,new Vector2D(0,0),new Orientation(0),new Genom(new int[32]), 10.0);
-        Animal bat = new Animal(map,new Vector2D(1,1),new Orientation(0),new Genom(new int[32]), 10.0);
-        map.placeAnimal(new Animal(map,new Vector2D(1,1),new Orientation(0),new Genom(new int[32]), 10.0));
-        map.placeAnimal(fox);
-        map.placeAnimal(new Animal(map,new Vector2D(1,1),new Orientation(0),new Genom(new int[32]), 15.0));
-//        drawAnimals((Graphics2D)g,map);
 
-        Iterator<Animal> ttt = map.animals.iterator();
-        for(Object s : map.animals){
-            System.out.println(s.toString());
+
+        double startEnergy = Double.parseDouble(empObj.getString("startEnergy"));
+        WholeMap map = new WholeMap(
+                empObj.getInt("width"),
+                empObj.getInt("height"),
+                Double.parseDouble(empObj.getString("plantEnergy")),
+                Double.parseDouble(empObj.getString("jungleRatio")),
+                startEnergy*0.5);
+
+        for(int i = 0; i < 18; i++){
+            map.placeAnimal(Animal.generateRandomAnimal(map, startEnergy));
+        }
+
+        int[]    arr = new int[32];
+        for(int i = 0; i < 32; i++) arr[i] = 0;
+        map.placeAnimal(new Animal(map, new Vector2D(10,10),new Orientation(0), new Genom(arr), 350));
+        MyFrame frame = new MyFrame(map, 10);
+
+        } catch (FileNotFoundException e) {
+            System.out.println("can't find params.json file");
         }
     }
+
 }

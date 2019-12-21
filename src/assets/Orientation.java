@@ -1,4 +1,4 @@
-package main;
+package assets;
 
 public class Orientation {
 

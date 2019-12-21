@@ -1,4 +1,4 @@
-package main;
+package assets;
 public class Vector2D implements Comparable{
     public final int x;
     public final int y;

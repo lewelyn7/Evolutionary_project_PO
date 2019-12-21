@@ -1,13 +1,10 @@
-package main;
-
-import com.sun.nio.sctp.PeerAddressChangeNotification;
+package assets;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
-import java.util.Vector;
 
-public class Animal implements Iorganism, Comparable {
+public class Animal implements Comparable {
     private Vector2D position;
     private Orientation orientation;
     private Genom gens;
@@ -24,8 +21,11 @@ public class Animal implements Iorganism, Comparable {
     }
 
     public boolean decrementEnergy(){
-        if(energy == 0) return false;
         energy = energy - 1;
+        if(energy <= 0) {
+            energy = 0;
+            return false;
+        }
         return true;
     }
 
@@ -87,10 +87,10 @@ public class Animal implements Iorganism, Comparable {
         if(position.y < 0){
             fixedY = ySize + position.y;
         }
-        if(position.x > xSize) {
+        if(position.x >= xSize) {
             fixedX = position.x % xSize;
         }
-        if(position.y > ySize) {
+        if(position.y >= ySize) {
             fixedY = position.y % ySize;
         }
         return new Vector2D(fixedX, fixedY);
@@ -109,9 +109,18 @@ public class Animal implements Iorganism, Comparable {
         }
         this.setEnergy(this.getEnergy()*0.75);
         other.setEnergy(other.getEnergy()*0.75);
-
         return new Animal(map, childPosition, orientation, gens.mixGenoms(other.gens), this.getEnergy()*0.25 + other.getEnergy()*0.25);
 
     }
 
+
+    public static Animal generateRandomAnimal(WholeMap map, double startEnergy){
+        Random posGenerator = new Random();
+        Vector2D position;
+        do {
+            position = new Vector2D(posGenerator.nextInt(map.xSize), posGenerator.nextInt(map.ySize));
+        }while(!map.canPlaceAnimal(position));
+
+        return new Animal(map, position, new Orientation(posGenerator.nextInt(8)), Genom.getRandomGenom(), startEnergy);
+    }
 }

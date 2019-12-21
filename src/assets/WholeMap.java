@@ -1,8 +1,6 @@
-package main;
+package assets;
 
 
-import java.lang.reflect.GenericArrayType;
-import java.time.Period;
 import java.util.*;
 
 public class WholeMap implements IPositionChangedObserver {
@@ -13,11 +11,11 @@ public class WholeMap implements IPositionChangedObserver {
     public Map<Vector2D, Grass> plants = new HashMap<Vector2D, Grass>();
     public List<Animal> animalsList = new LinkedList<Animal>();
     public JungleMap jungle;
-    public int objCounter = 0;
+    private int objCounter = 0;
     private int capacity;
-    private final double procreationEnergy;
-    Random xGenerator = new Random();
-    Random yGenerator = new Random();
+    public final double procreationEnergy;
+    private Random xGenerator = new Random();
+    private Random yGenerator = new Random();
 
 
     public WholeMap(int xSize, int ySize, double grassEnergy, double jungleRatio, double procreationEnergy){
@@ -109,8 +107,11 @@ public class WholeMap implements IPositionChangedObserver {
     }
     public void plantJungleGrassRandomly(){
         Vector2D vectToPlant = jungle.getRandomVect();
-        if(jungle.capacity <= jungle.objCounter)
+        if(jungle.capacity <= jungle.objCounter){
+            System.out.println("capacity exceeded");
             return;
+
+        }
         while(!canPlant(vectToPlant)){
             vectToPlant = jungle.getRandomVect();
         }
@@ -120,7 +121,7 @@ public class WholeMap implements IPositionChangedObserver {
 
         Set<Grass> toBeEaten = new HashSet<Grass>();
         List<Animal> deadAnimals = new LinkedList<Animal>();
-
+        //loop through animals to add them to action lists
         for(Animal sanimal : animalsList){
 
                 sanimal.decrementEnergy();
@@ -137,7 +138,7 @@ public class WholeMap implements IPositionChangedObserver {
 
 
             }
-
+        //remove dead Animals
         for(Animal sanimal : deadAnimals){
             removeAnimal(sanimal);
         }
@@ -165,6 +166,7 @@ public class WholeMap implements IPositionChangedObserver {
             removeGrass(sgrass);
         }
 
+        //procreating
         List<Animal> toBePlaced = new LinkedList<Animal>();
         for(Map.Entry<Vector2D, PriorityQueue<Animal>> entry : animals.entrySet()){
             PriorityQueue<Animal> animalQueue = entry.getValue();
