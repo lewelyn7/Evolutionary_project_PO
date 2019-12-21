@@ -22,7 +22,7 @@ public class Animal implements Comparable {
 
     public boolean decrementEnergy(){
         energy = energy - 1;
-        if(energy <= 0) {
+        if(energy < 1) {
             energy = 0;
             return false;
         }

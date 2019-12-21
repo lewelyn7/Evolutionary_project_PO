@@ -108,7 +108,7 @@ public class WholeMap implements IPositionChangedObserver {
     public void plantJungleGrassRandomly(){
         Vector2D vectToPlant = jungle.getRandomVect();
         if(jungle.capacity <= jungle.objCounter){
-            System.out.println("capacity exceeded");
+//            System.out.println("capacity exceeded");
             return;
 
         }
@@ -144,7 +144,7 @@ public class WholeMap implements IPositionChangedObserver {
         }
         //Grass eating
         for(Grass sgrass: toBeEaten){
-            System.out.println("eating eating");
+//            System.out.println("eating eating");
 
             PriorityQueue<Animal> willBeEating = animals.get(sgrass.getPosition());
             if(willBeEating.size() == 1) {

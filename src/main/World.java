@@ -33,11 +33,13 @@ public class World {
                 Double.parseDouble(empObj.getString("jungleRatio")),
                 startEnergy*0.5);
 
-        for(int i = 0; i < 30; i++){
+        //generate random animals on start
+        for(int i = 0; i < empObj.getInt("animalsOnStart"); i++){
             map.placeAnimal(Animal.generateRandomAnimal(map, startEnergy));
         }
 
-        for(int i = 0; i < 25; i++){
+        //generate random grass on start
+        for(int i = 0; i < empObj.getInt("grassOnStart")/2; i++){
             map.plantGrassRandomly();
             map.plantJungleGrassRandomly();
         }
